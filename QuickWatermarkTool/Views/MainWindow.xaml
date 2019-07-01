@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="QuickWatermarkTool.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="QuickWatermarkTool">
+        Icon="/Assets/qwt-icon.ico"
+        Title="Quick Watermark Tool">
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
