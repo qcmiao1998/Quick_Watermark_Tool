@@ -29,6 +29,8 @@ namespace QuickWatermarkTool
         // container, etc.
         private static void AppMain(Application app, string[] args)
         {
+            Config.config = new Config();
+
             var window = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),
