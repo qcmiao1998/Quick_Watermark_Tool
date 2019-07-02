@@ -12,6 +12,7 @@ namespace QuickWatermarkTool
 {
     class Program
     {
+        private static Window mainWindow;
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
@@ -31,27 +32,15 @@ namespace QuickWatermarkTool
         {
             Config.config = new Config();
 
-            var window = new MainWindow
+            mainWindow = new MainWindow
             {
                 DataContext = new MainWindowViewModel(),
             };
 
-            app.Run(window);
+            app.Run(mainWindow);
 
-            if (Config.config.OpenFiledialogOnStartup)
-            {
-                SelectPhotoFiles();
-            }
         }
 
-        public static void SelectPhotoFiles()
-        {
-            FileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Select Photos";
-            FileDialogFilter imageFilter = new FileDialogFilter();
-            imageFilter.Extensions.AddRange(new []{"jpg","png","tif"});
-            imageFilter.Name = "Images";
-            dialog.Filters.Add(imageFilter);
-        }
+
     }
 }
