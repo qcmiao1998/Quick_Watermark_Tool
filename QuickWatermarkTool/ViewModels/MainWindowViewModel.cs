@@ -2,6 +2,7 @@
 using ReactiveUI;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,7 +13,7 @@ namespace QuickWatermarkTool.ViewModels
         public MainWindowViewModel()
         {
             Photos = new ObservableCollection<Photo>();
-            SelectedSavingFormat = Config.config.DefaultOutputformat.ToString();
+            SelectedSavingFormat = Config.config.DefaultOutputformat.ToString().ToUpper();
         }
 
         public ObservableCollection<Photo> Photos { get; set; }
@@ -24,7 +25,7 @@ namespace QuickWatermarkTool.ViewModels
             set => this.RaiseAndSetIfChanged(ref savingPath, value);
         }
 
-        public string[] SavingFormats => Enum.GetNames(typeof(Photo.Format));
+        public string[] SavingFormats => Enum.GetNames(typeof(Photo.Format)).Select(i => i.ToUpper()).ToArray();
         public string SelectedSavingFormat { get; set; }
 
         public void ImportImage()
@@ -59,6 +60,11 @@ namespace QuickWatermarkTool.ViewModels
                 });
             });
             processThread.Start();
+        }
+
+        public void Clear()
+        {
+            Photos.Clear();
         }
 
     }

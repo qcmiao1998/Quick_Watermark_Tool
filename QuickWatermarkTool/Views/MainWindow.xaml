@@ -3,7 +3,7 @@
         xmlns:vm="clr-namespace:QuickWatermarkTool.ViewModels;assembly=QuickWatermarkTool"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
         x:Class="QuickWatermarkTool.Views.MainWindow"
         Icon="/Assets/qwt-icon.ico"
         Title="Quick Watermark Tool">
@@ -11,25 +11,29 @@
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-  
-  <StackPanel HorizontalAlignment="Left" Height="375" Margin="0,0,0,0" VerticalAlignment="Top" Width="770">
-    <Grid Height="40">
-      <Button Content="Import Image" Command="{Binding ImportImage}"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.ColumnSpan="3"/>
-      <Button Content="Saving Folder" Command="{Binding SelectSavingFolder}" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.Column="2"/>
-      <TextBlock x:Name="expended_name" HorizontalAlignment="Left" Margin="485,5,0,0" TextWrapping="Wrap" Text="{Binding SavingPath}" VerticalAlignment="Top" Height="24" FontSize="14" Width="280"/>
-    </Grid>
-    <StackPanel>
-      <DataGrid Items="{Binding Photos}">
-        <DataGrid.Columns>
-          <DataGridTextColumn Header="Title" Binding="{Binding FileName}"  />
-          <DataGridTextColumn Header="Status" Binding="{Binding Status}"  />
-        </DataGrid.Columns>
-      </DataGrid>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    
+    <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,10,10,10">
+      <Button Content="Add Image" Command="{Binding ImportImage}" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
+      <Button Content="Saving Folder" Command="{Binding SelectSavingFolder}" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
+      <TextBlock x:Name="expended_name" Text="{Binding SavingPath}" FontSize="16" VerticalAlignment="Center" />
     </StackPanel>
-    <Grid Height="40" VerticalAlignment="Bottom">
-      <Button Content="Start" Command="{Binding Start}" HorizontalAlignment="Left" Margin="672,10,0,0" VerticalAlignment="Top" Width="88" Height="30" FontSize="16"/>
-      <ComboBox x:Name="Format" Items="{Binding SavingFormats}" SelectedItem="{Binding SelectedSavingFormat, Mode=TwoWay}" HorizontalAlignment="Left" Margin="514,10,0,0" Width="120" FontSize="16" Background="{x:Null}"/>
-    </Grid>
-  </StackPanel>
+    <DataGrid Items="{Binding Photos}"  Grid.Row="1" FontSize="14" Margin="10,10,10,10" ScrollViewer.VerticalScrollBarVisibility="Auto">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Title" Binding="{Binding FileName}" Width="3*" />
+        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="2*" />
+      </DataGrid.Columns>
+    </DataGrid>
+    <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10,10,10,10" HorizontalAlignment="Right">
+      <ComboBox x:Name="Format" Items="{Binding SavingFormats}" SelectedItem="{Binding SelectedSavingFormat, Mode=TwoWay}" FontSize="16"  VerticalAlignment="Center" Margin="0,0,10,0" Width="160" />
+      <Button Content="Start" Command="{Binding Start}" FontSize="16" Margin="0,0,10,0" Width="160" VerticalAlignment="Center" />
+      <Button Content="Clear" Command="{Binding Clear}" FontSize="16" Margin="0,0,10,0" Width="160" VerticalAlignment="Center" />
+    </StackPanel>
+  </Grid>
 
 </Window>
