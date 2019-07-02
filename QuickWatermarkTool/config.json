@@ -1,1 +1,18 @@
-﻿
+﻿{
+  "MaxOutputImageWidth": 2000,
+  "MaxOutputImageHeight": 2000,
+  "WatermarkFilename": "watermark.png",
+  "MaxWatermarkScaleWidth": 0.1,
+  "MaxWatermarkScaleHeight": 0.1,
+  "WatermarkOpacity": 1.0,
+  "WatermarkOffsetWidth": 0,
+  "WatermarkOffsetHeight": 0,
+  "DefaultOutputformat": "jpg",
+  "OpenFiledialogOnStartup": true,
+  "AuthorName": "",
+  "Copyright": "",
+  "Waterposion": "center",
+  "OutputSuffix":"_watermarked"
+
+} 
+
