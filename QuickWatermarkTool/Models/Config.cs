@@ -46,13 +46,21 @@ namespace QuickWatermarkTool.Models
                 string rt = iconfig["WatermarkPosition"];
                 switch (rt.ToLower())
                 {
-                    case "LeftTop":
+                    case "lefttop":
                         return Photo.WatermarkPosition.LeftTop;
-                    case "LeftBottom":
+                    case "leftbottom":
                         return Photo.WatermarkPosition.LeftBottom;
-                    default:
+                    case "righttop":
+                        return Photo.WatermarkPosition.RightTop;
+                    case "rightbottom":
+                        return Photo.WatermarkPosition.RigthBottom;
+                    case "topmiddle":
+                        return Photo.WatermarkPosition.TopMiddle;
+                    case "bottommiddle":
                         return Photo.WatermarkPosition.BottomMiddle;
-
+                    default:
+                        return Photo.WatermarkPosition.Center;
+               
                 }
             }
         }
