@@ -38,7 +38,11 @@ namespace QuickWatermarkTool
             {
                 DataContext = MwDataContext,
             };
-
+            if (Config.config.OpenFiledialogOnStartup)
+            {
+                Photo.SelectPhotoFiles();
+                Photo.SelectSavingFolder();
+            }
             app.Run(MainWindow);
 
         }

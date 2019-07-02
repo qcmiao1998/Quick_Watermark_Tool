@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using ReactiveUI;
+﻿using Avalonia.Controls;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Jpeg;
@@ -11,15 +7,33 @@ using SixLabors.ImageSharp.MetaData.Profiles.Exif;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.Primitives;
+using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace QuickWatermarkTool.Models
 {
     public class Photo
     {
-        public static List<Photo> PhotoList = new List<Photo>();
+        public static ObservableCollection<Photo> Photos
+        {
+            get => Program.MwDataContext.Photos;
+        }
+
+        public static string SavingPath
+        {
+            get => Program.MwDataContext.SavingPath;
+            set
+            {
+                Program.MwDataContext.SavingPath = value;
+            }
+        }
 
         private Image<Rgba32> originImage;
         private Image<Rgba32> watermarkImage;
+        public string ImagePath;
 
         public string FileName { get; }
 
@@ -34,13 +48,15 @@ namespace QuickWatermarkTool.Models
 
         public Photo(string path)
         {
-            originImage = Image.Load(path);
-            watermarkImage = Image.Load(Config.config.WatermarkFilename);
-            FileName = Path.GetFileNameWithoutExtension(path);
+            this.ImagePath = path;
+            FileName = Path.GetFileName(path);
         }
 
         public void Watermark()
         {
+            originImage = Image.Load(ImagePath);
+            watermarkImage = Image.Load(Config.config.WatermarkFilename);
+
             int wmPosiW, wmPosiH;
             int maxWmWidth = (int)Math.Floor(Config.config.MaxWatermarkScaleWidth * Width);
             int maxWmHeight = (int)Math.Floor(Config.config.MaxWatermarkScaleHeight * Height);
@@ -135,6 +151,34 @@ namespace QuickWatermarkTool.Models
             }
         }
 
+        public static async void SelectPhotoFiles()
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = "Select Photos",
+                AllowMultiple = true
+            };
+            FileDialogFilter imageFilter = new FileDialogFilter();
+            imageFilter.Extensions.AddRange(new[] { "jpg", "png", "tif" });
+            imageFilter.Name = "Images";
+            dialog.Filters.Add(imageFilter);
+            string[] files = await dialog.ShowAsync(Program.MainWindow);
+            foreach (var file in files)
+            {
+                if(Photos.Count(i => i.ImagePath == file) == 0)
+                    Photos.Add(new Photo(file));
+            }
+        }
+
+        public static async void SelectSavingFolder()
+        {
+            OpenFolderDialog ofd = new OpenFolderDialog
+            {
+                Title = "Select Saving Folder"
+            };
+            string folder = await ofd.ShowAsync(Program.MainWindow);
+            SavingPath = folder;
+        }
 
         public enum Format
         {

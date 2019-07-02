@@ -18,9 +18,9 @@
       <Button Content="Setting" HorizontalAlignment="Right" Margin="630,0,0,0" VerticalAlignment="Top" Width="140" Height="30" FontSize="16"/>
     </Grid>
     <Grid Height="40">
-      <Button Content="Inuput Imagine" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.ColumnSpan="3"/>
-      <Button Content="Select follower" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.Column="2"/>
-      <TextBlock x:Name="expended_name" HorizontalAlignment="Left" Margin="485,5,0,0" TextWrapping="Wrap" Text="follow" VerticalAlignment="Top" Height="24" FontSize="14" Width="280"/>
+      <Button Content="Import Image" Command="{Binding ImportImage}"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.ColumnSpan="3"/>
+      <Button Content="Saving Folder" Command="{Binding SelectSavingFolder}" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.Column="2"/>
+      <TextBlock x:Name="expended_name" HorizontalAlignment="Left" Margin="485,5,0,0" TextWrapping="Wrap" Text="{Binding SavingPath}" VerticalAlignment="Top" Height="24" FontSize="14" Width="280"/>
     </Grid>
     <StackPanel>
       <DataGrid Items="{Binding Photos}">

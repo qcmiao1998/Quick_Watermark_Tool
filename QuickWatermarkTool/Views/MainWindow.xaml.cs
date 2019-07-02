@@ -19,41 +19,9 @@ namespace QuickWatermarkTool.Views
         {
             AvaloniaXamlLoader.Load(this);
 
-            if (Config.config.OpenFiledialogOnStartup)
-            {
-                SelectPhotoFiles();
-            }
             
         }
 
-        public async void SelectPhotoFiles()
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                Title = "Select Photos",
-                AllowMultiple = true
-            };
-            FileDialogFilter imageFilter = new FileDialogFilter();
-            imageFilter.Extensions.AddRange(new[] { "jpg", "png", "tif" });
-            imageFilter.Name = "Images";
-            dialog.Filters.Add(imageFilter);
-            string[] files = await dialog.ShowAsync(this);
-            foreach (var file in files)
-            {
-                Photo.PhotoList.Add(new Photo(file));
-            }
-
-            Program.MwDataContext.Photos = Photo.PhotoList;
-        }
-
-        public async void SelectSavingFolder()
-        {
-            OpenFolderDialog ofd = new OpenFolderDialog
-            {
-                Title = "Select Saving Folder"
-            };
-            string folder = await ofd.ShowAsync(this);
-
-        }
+        
     }
 }
