@@ -26,7 +26,7 @@ namespace QuickWatermarkTool.Models
             set => Program.MwDataContext.SavingPath = value;
         }
 
-        public static Format SavingFormat => (Format)Enum.Parse(typeof(Format),Program.MwDataContext.SelectedSavingFormat);
+        public static Format SavingFormat => (Format)Enum.Parse(typeof(Format),Program.MwDataContext.SelectedSavingFormat.ToLower());
 
         private Image<Rgba32> originImage;
         private Image<Rgba32> watermarkImage;
