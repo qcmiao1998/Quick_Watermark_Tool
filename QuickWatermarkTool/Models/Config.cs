@@ -13,6 +13,20 @@ namespace QuickWatermarkTool.Models
         {
             iconfig = new ConfigurationBuilder().AddJsonFile("appSettings.json", optional: false, reloadOnChange: true).Build();
         }
+        
+        public int MaxOutputImageWidth { get; }
+        public int MaxOutputImageHeight { get; }
+        public string WatermarkFilename { get; }
+        public float MaxWatermarkScaleWidth { get; }
+        public float MaxWatermarkScaleHeight { get; }
+        public float MaxWatermarkOpaeity { get; }
+        public int WatermarkOffset { get; }
+        public string DefactOutputformat { get; }
+        public bool OpenFiledialogOnStartup { get; }
+        public string Authorname { get; }
+        public string CopyRight { get; }
+        public string WatermarkPosition { get; }
+        public string OutputSuffix { get; }
         public string GetConfig(string key, string defaultvalue)
         {
             try
@@ -46,7 +60,7 @@ namespace QuickWatermarkTool.Models
             catch { }
             return defaultvalue;
         }
-        public Boolean GetConfig(string key, Boolean defaultvalue)
+        public bool GetConfig(string key, bool defaultvalue)
         {
             try
             {
@@ -55,20 +69,6 @@ namespace QuickWatermarkTool.Models
             }
             catch { }
             return defaultvalue;
-        }
-        public int MaxOutputImageWidth { get {
-                if(int.TryParse(iconfig["MaxOutputImageWidth"], out int r))
-                return r;
-                return 1000;
-            } }
-        public int MaxOutputImageHeight
-        {
-            get
-            {
-                if (int.TryParse(iconfig["MaxOutputImageHeight"], out int r))
-                    return r;
-                return 1000;
-            }
         }
 
 
