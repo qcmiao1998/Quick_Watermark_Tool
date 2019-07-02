@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using QuickWatermarkTool.Models;
@@ -42,22 +43,26 @@ namespace QuickWatermarkTool.ViewModels
 
         public void Start()
         {
-            Parallel.ForEach(Photos, photo =>
+            Thread processThread = new Thread(() =>
             {
-                try
+                Parallel.ForEach(Photos, photo =>
                 {
-                    if (photo.Status != "Success")
+                    try
                     {
-                        photo.Watermark();
-                        photo.AddCopyright();
-                        photo.SaveImage();
+                        if (photo.Status != "Success")
+                        {
+                            photo.Watermark();
+                            photo.AddCopyright();
+                            photo.SaveImage();
+                        }
                     }
-                }
-                catch (Exception e)
-                {
-                    photo.Status = e.Message;
-                }
+                    catch (Exception e)
+                    {
+                        photo.Status = e.Message;
+                    }
+                });
             });
+            processThread.Start();
         }
 
     }
