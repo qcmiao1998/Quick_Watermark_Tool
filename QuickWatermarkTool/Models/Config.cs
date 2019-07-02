@@ -19,12 +19,12 @@ namespace QuickWatermarkTool.Models
         public string WatermarkFilename { get; }
         public float MaxWatermarkScaleWidth { get; }
         public float MaxWatermarkScaleHeight { get; }
-        public float MaxWatermarkOpaeity { get; }
+        public float WatermarkOpacity { get; }
         public int WatermarkOffset { get; }
         public Photo.Format DefactOutputformat { get; }
         public bool OpenFiledialogOnStartup { get; }
-        public string Authorname { get; }
-        public string CopyRight { get; }
+        public string AuthorName { get; }
+        public string Copyright { get; }
         public Photo.WatermarkPosition WatermarkPosition { get; }
         public string OutputSuffix { get; }
         public string GetConfig(string key, string defaultvalue)
