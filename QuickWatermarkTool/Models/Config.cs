@@ -50,6 +50,8 @@ namespace QuickWatermarkTool.Models
                         return Photo.WatermarkPosition.LeftTop;
                     case "LeftBottom":
                         return Photo.WatermarkPosition.LeftBottom;
+                    default:
+                        return Photo.WatermarkPosition.BottomMiddle;
 
                 }
             }

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Logging.Serilog;
 using QuickWatermarkTool.ViewModels;
 using QuickWatermarkTool.Views;
 using Avalonia.Reactive;
+using QuickWatermarkTool.Models;
 
 namespace QuickWatermarkTool
 {
@@ -18,6 +21,7 @@ namespace QuickWatermarkTool
         public static AppBuilder BuildAvaloniaApp()
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
+                .UseDataGrid()
                 .LogToDebug()
                 .UseReactiveUI();
 
@@ -31,6 +35,21 @@ namespace QuickWatermarkTool
             };
 
             app.Run(window);
+
+            if (Config.config.OpenFiledialogOnStartup)
+            {
+                SelectPhotoFiles();
+            }
+        }
+
+        public static void SelectPhotoFiles()
+        {
+            FileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Select Photos";
+            FileDialogFilter imageFilter = new FileDialogFilter();
+            imageFilter.Extensions.AddRange(new []{"jpg","png","tif"});
+            imageFilter.Name = "Images";
+            dialog.Filters.Add(imageFilter);
         }
     }
 }
