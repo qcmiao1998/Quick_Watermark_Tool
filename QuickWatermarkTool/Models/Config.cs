@@ -11,7 +11,7 @@ namespace QuickWatermarkTool.Models
         private IConfiguration iconfig;
         public Config()
         {
-            iconfig = new ConfigurationBuilder().AddJsonFile("appSettings.json", optional: false, reloadOnChange: true).Build();
+            iconfig = new ConfigurationBuilder().AddJsonFile("config.json", optional: false, reloadOnChange: true).Build();
         }
 
         public int MaxOutputImageWidth => GetConfig("MaxOutputImageWidth", 2000);
