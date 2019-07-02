@@ -13,20 +13,46 @@ namespace QuickWatermarkTool.Models
         {
             iconfig = new ConfigurationBuilder().AddJsonFile("appSettings.json", optional: false, reloadOnChange: true).Build();
         }
-        
-        public int MaxOutputImageWidth { get; }
-        public int MaxOutputImageHeight { get; }
-        public string WatermarkFilename { get; }
-        public float MaxWatermarkScaleWidth { get; }
-        public float MaxWatermarkScaleHeight { get; }
-        public float WatermarkOpacity { get; }
-        public int WatermarkOffset { get; }
-        public Photo.Format DefactOutputformat { get; }
-        public bool OpenFiledialogOnStartup { get; }
-        public string AuthorName { get; }
-        public string Copyright { get; }
-        public Photo.WatermarkPosition WatermarkPosition { get; }
-        public string OutputSuffix { get; }
+        private int a;
+        private float b;
+        private bool c;
+        private string d;
+
+        public int MaxOutputImageWidth => GetConfig("MaxOutputImageWidth", 2000);
+        public int MaxOutputImageHeight => GetConfig("MaxOutputImageHeight", 2000);
+        public string WatermarkFilename => GetConfig("WatermarkFilename", "watermark.png");
+        public float MaxWatermarkScaleWidth => GetConfig("MaxWatermarkScaleWidth", (float)0.1);
+        public float MaxWatermarkScaleHeight => GetConfig("MaxWatermarkScaleHeight", (float)0.1);
+        public float WatermarkOpacity => GetConfig("WatermarkOpacity", (float)1.0);
+        public int WatermarkOffsetWidth => GetConfig("WatermarkOffsetWidth", 0);
+        public int WatermarkOffsetHeight => GetConfig("WatermarkOffsetHeight", 0);
+        public Photo.Format DefaultOutputformat { get {
+                string rs = iconfig["DefaultOutputformat"];
+                switch (rs.ToLower())
+                {
+                    case "png":
+                        return Photo.Format.png;
+                    case "gif":
+                        return Photo.Format.gif;
+                    case "jpg":
+                    default:
+                        return Photo.Format.jpg;
+                }
+            } }
+        public bool OpenFiledialogOnStartup => GetConfig("OpenFiledialogOnStartup", c);
+        public string AuthorName => GetConfig("AuthorName", d);
+        public string Copyright => GetConfig("Copyright", d);
+        public Photo.WatermarkPosition WatermarkPosition { get {
+                string rt = iconfig["WatermarkPosition"];
+                switch (rt.ToLower())
+                {
+                    case "LeftTop":
+                        return Photo.WatermarkPosition.LeftTop;
+                    case "LeftBottom":
+                        return Photo.WatermarkPosition.LeftBottom;
+
+                }
+        public string OutputSuffix => GetConfig("OutputSuffix", d);
         public string GetConfig(string key, string defaultvalue)
         {
             try
