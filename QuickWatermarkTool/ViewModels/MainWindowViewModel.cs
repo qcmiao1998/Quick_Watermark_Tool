@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QuickWatermarkTool.Models;
+using ReactiveUI;
+using System;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls;
-using QuickWatermarkTool.Models;
-using ReactiveUI;
-using ReactiveUI.Legacy;
 
 namespace QuickWatermarkTool.ViewModels
 {

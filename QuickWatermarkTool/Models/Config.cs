@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
-using System.Text;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 
 namespace QuickWatermarkTool.Models
 {

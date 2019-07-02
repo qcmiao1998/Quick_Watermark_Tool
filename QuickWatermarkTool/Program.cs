@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Logging.Serilog;
+using QuickWatermarkTool.Models;
 using QuickWatermarkTool.ViewModels;
 using QuickWatermarkTool.Views;
-using Avalonia.Reactive;
-using QuickWatermarkTool.Models;
+using System.Threading;
 
 namespace QuickWatermarkTool
 {
