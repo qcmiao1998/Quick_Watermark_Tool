@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ReactiveUI;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Jpeg;
@@ -15,7 +16,7 @@ namespace QuickWatermarkTool.Models
 {
     public class Photo
     {
-        public static List<Photo> PhotoList;
+        public static List<Photo> PhotoList = new List<Photo>();
 
         private Image<Rgba32> originImage;
         private Image<Rgba32> watermarkImage;
@@ -35,7 +36,7 @@ namespace QuickWatermarkTool.Models
         {
             originImage = Image.Load(path);
             watermarkImage = Image.Load(Config.config.WatermarkFilename);
-            Path.GetFileNameWithoutExtension(path);
+            FileName = Path.GetFileNameWithoutExtension(path);
         }
 
         public void Watermark()

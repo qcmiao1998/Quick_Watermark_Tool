@@ -22,8 +22,14 @@
       <Button Content="Select follower" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.Column="2"/>
       <TextBlock x:Name="expended_name" HorizontalAlignment="Left" Margin="485,5,0,0" TextWrapping="Wrap" Text="follow" VerticalAlignment="Top" Height="24" FontSize="14" Width="280"/>
     </Grid>
-    
-    <Grid Height="40">
+    <StackPanel>
+      <DataGrid Items="{Binding Photos}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Title" Binding="{Binding FileName}"  />
+        </DataGrid.Columns>
+      </DataGrid>
+    </StackPanel>
+    <Grid Height="40" VerticalAlignment="Bottom">
       <Button Content="Start" HorizontalAlignment="Left" Margin="672,10,0,0" VerticalAlignment="Top" Width="88" Height="30" FontSize="16"/>
       <ComboBox x:Name="Format" HorizontalAlignment="Left" Margin="514,10,0,0" Width="120" FontSize="16" Background="{x:Null}"/>
     </Grid>

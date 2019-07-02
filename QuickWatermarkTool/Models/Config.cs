@@ -71,7 +71,7 @@ namespace QuickWatermarkTool.Models
             try
             {
                 string result = iconfig[key];
-                if (result != String.Empty)
+                if (!string.IsNullOrEmpty(result))
                     return result;
             }
             catch { }

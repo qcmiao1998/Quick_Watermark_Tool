@@ -18,10 +18,12 @@ namespace QuickWatermarkTool.Views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+
             if (Config.config.OpenFiledialogOnStartup)
             {
                 SelectPhotoFiles();
             }
+            
         }
 
         public async void SelectPhotoFiles()
@@ -36,6 +38,12 @@ namespace QuickWatermarkTool.Views
             imageFilter.Name = "Images";
             dialog.Filters.Add(imageFilter);
             string[] files = await dialog.ShowAsync(this);
+            foreach (var file in files)
+            {
+                Photo.PhotoList.Add(new Photo(file));
+            }
+
+            Program.MwDataContext.Photos = Photo.PhotoList;
         }
 
         public async void SelectSavingFolder()

@@ -12,7 +12,9 @@ namespace QuickWatermarkTool
 {
     class Program
     {
-        private static Window mainWindow;
+        public static Window MainWindow;
+
+        public static MainWindowViewModel MwDataContext;
         // Initialization code. Don't use any Avalonia, third-party APIs or any
         // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
         // yet and stuff might break.
@@ -31,13 +33,13 @@ namespace QuickWatermarkTool
         private static void AppMain(Application app, string[] args)
         {
             Config.config = new Config();
-
-            mainWindow = new MainWindow
+            MwDataContext = new MainWindowViewModel();
+            MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = MwDataContext,
             };
 
-            app.Run(mainWindow);
+            app.Run(MainWindow);
 
         }
 
