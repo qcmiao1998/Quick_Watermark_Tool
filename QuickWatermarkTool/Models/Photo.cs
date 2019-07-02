@@ -140,24 +140,36 @@ namespace QuickWatermarkTool.Models
 
         public void SaveImage()
         {
-            string fileNameWithoutExt = Path.GetFileNameWithoutExtension(ImagePath);
-            string saveName = fileNameWithoutExt + Config.config.OutputSuffix + "." + Enum.GetName(typeof(Format),SavingFormat);
-            string filepath = Path.Combine(SavingPath, saveName);
-            switch (SavingFormat)
+            if (FrameCount > 1)
             {
-                case Format.png:
-                    originImage.Save(filepath, new PngEncoder());
-                    break;
-                case Format.gif:
-                    originImage.Save(filepath, new GifEncoder());
-                    break;
-                case Format.jpg:
-                    originImage.Save(filepath, new JpegEncoder
-                    {
-                        Quality = 80
-                    });
-                    break;
+                string fileNameWithoutExt = Path.GetFileNameWithoutExtension(ImagePath);
+                string saveName = fileNameWithoutExt + Config.config.OutputSuffix + ".gif";
+                string filepath = Path.Combine(SavingPath, saveName);
+                originImage.Save(filepath, new GifEncoder());
             }
+            else
+            {
+                string fileNameWithoutExt = Path.GetFileNameWithoutExtension(ImagePath);
+                string saveName = fileNameWithoutExt + Config.config.OutputSuffix + "." +
+                                  Enum.GetName(typeof(Format), SavingFormat);
+                string filepath = Path.Combine(SavingPath, saveName);
+                switch (SavingFormat)
+                {
+                    case Format.png:
+                        originImage.Save(filepath, new PngEncoder());
+                        break;
+                    case Format.gif:
+                        originImage.Save(filepath, new GifEncoder());
+                        break;
+                    case Format.jpg:
+                        originImage.Save(filepath, new JpegEncoder
+                        {
+                            Quality = 80
+                        });
+                        break;
+                }
+            }
+
             originImage.Dispose();
             watermarkImage.Dispose();
             Status = "Success";

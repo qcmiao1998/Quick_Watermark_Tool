@@ -46,9 +46,12 @@ namespace QuickWatermarkTool.ViewModels
             {
                 try
                 {
-                    photo.Watermark();
-                    photo.AddCopyright();
-                    photo.SaveImage();
+                    if (photo.Status != "Success")
+                    {
+                        photo.Watermark();
+                        photo.AddCopyright();
+                        photo.SaveImage();
+                    }
                 }
                 catch (Exception e)
                 {
