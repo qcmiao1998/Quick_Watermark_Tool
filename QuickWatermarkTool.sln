@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.29020.237
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickWatermarkTool", "QuickWatermarkTool\QuickWatermarkTool.csproj", "{6F2D8DED-B273-4D78-97E1-F948A1DE7C76}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98248947-CB98-48A2-8089-D6A431FBE862}"
+	ProjectSection(SolutionItems) = preProject
+		publish.ps1 = publish.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
