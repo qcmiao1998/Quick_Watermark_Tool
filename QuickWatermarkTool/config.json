@@ -12,6 +12,5 @@
   "AuthorName": "",
   "Copyright": "",
   "WatermarkPosition": "center", /* LeftTop, LeftBottom, RightTop, RigthBottom, TopMiddle, BottomMiddle, Center */
-  "OutputSuffix":"_watermarked"
+  "OutputSuffix": "_watermarked"
 }
-
