@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Logging.Serilog;
@@ -41,6 +42,7 @@ namespace QuickWatermarkTool
             if (Config.config.OpenFiledialogOnStartup)
             {
                 Photo.SelectPhotoFiles();
+                Thread.SpinWait(100);
                 Photo.SelectSavingFolder();
             }
             app.Run(MainWindow);

@@ -183,7 +183,7 @@ namespace QuickWatermarkTool.Models
                 AllowMultiple = true
             };
             FileDialogFilter imageFilter = new FileDialogFilter();
-            imageFilter.Extensions.AddRange(new[] { "jpg", "png", "tif" });
+            imageFilter.Extensions.AddRange(new[] { "jpg", "png", "gif" });
             imageFilter.Name = "Images";
             dialog.Filters.Add(imageFilter);
             string[] files = await dialog.ShowAsync(Program.MainWindow);
