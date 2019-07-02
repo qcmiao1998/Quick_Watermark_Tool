@@ -13,20 +13,22 @@
     </Design.DataContext>
   
   <StackPanel HorizontalAlignment="Left" Height="375" Margin="0,0,0,0" VerticalAlignment="Top" Width="770">
-    <Grid Height="40">
+    <Grid Height="40" VerticalAlignment="Center">
       <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Qucik Watermark Tool" VerticalAlignment="Top" Height="30" FontSize="20" Width="280"/>
-      <Button Content="Setting" HorizontalAlignment="Left" Margin="630,0,0,0" VerticalAlignment="Top" Width="140" Height="30" FontSize="16"/>
+      <Button Content="Setting" HorizontalAlignment="Right" Margin="630,0,0,0" VerticalAlignment="Top" Width="140" Height="30" FontSize="16"/>
     </Grid>
     <Grid Height="40">
       <Button Content="Inuput Imagine" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.ColumnSpan="3"/>
       <Button Content="Select follower" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.Column="2"/>
       <TextBlock x:Name="expended_name" HorizontalAlignment="Left" Margin="485,5,0,0" TextWrapping="Wrap" Text="follow" VerticalAlignment="Top" Height="24" FontSize="14" Width="280"/>
     </Grid>
-    <TextBlock Height="40" Text="Photo Template" FontSize="24" FontWeight="Bold" TextAlignment="Center"/>
-    <Grid Height="250">
-      
+    <StackPanel Height="250">
+      <DataGrid Items="{Binding Photos}">
+        
+        
+      </DataGrid>
     
-    </Grid>
+    </StackPanel>>
     <Grid Height="40">
       <Button Content="Start" HorizontalAlignment="Left" Margin="672,10,0,0" VerticalAlignment="Top" Width="88" Height="30" FontSize="16"/>
       <ComboBox x:Name="Format" HorizontalAlignment="Left" Margin="514,10,0,0" Width="120" FontSize="16" SelectionChanged="ComboBox_SelectionChanged" Background="{x:Null}"/>

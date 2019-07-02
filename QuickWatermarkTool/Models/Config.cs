@@ -51,8 +51,7 @@ namespace QuickWatermarkTool.Models
             try
             {
                Boolean result = Boolean.Parse(iconfig[key]);
-                if (result != 0)
-                    return result;
+               return result;
             }
             catch { }
             return defaultvalue;

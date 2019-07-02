@@ -9,8 +9,10 @@ using SixLabors.Primitives;
 
 namespace QuickWatermarkTool.Models
 {
-    class Photo
+    public class Photo
     {
+        public static List<Photo> PhotoList;
+
         private Image<Rgba32> originImage;
         private Image<Rgba32> watermarkImage;
 
@@ -48,7 +50,7 @@ namespace QuickWatermarkTool.Models
                 default:
                     throw new NotImplementedException();
             }
-            originImage.Mutate(i => { i.DrawImage(watermarkImage, opacity, new Point(wmPosiX, wmPosiY)); });
+            //originImage.Mutate(i => { i.DrawImage(watermarkImage, opacity, new Point(wmPosiX, wmPosiY)); });
         }
 
         private static void ResizePic(Image<Rgba32> image, int maxWidth, int maxHeight)

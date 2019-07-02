@@ -3,6 +3,7 @@ using Avalonia;
 using Avalonia.Logging.Serilog;
 using QuickWatermarkTool.ViewModels;
 using QuickWatermarkTool.Views;
+using Avalonia.Reactive;
 
 namespace QuickWatermarkTool
 {
