@@ -13,10 +13,6 @@
     </Design.DataContext>
   
   <StackPanel HorizontalAlignment="Left" Height="375" Margin="0,0,0,0" VerticalAlignment="Top" Width="770">
-    <Grid Height="40" VerticalAlignment="Center">
-      <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Qucik Watermark Tool" VerticalAlignment="Top" Height="30" FontSize="20" Width="280"/>
-      <Button Content="Setting" HorizontalAlignment="Right" Margin="630,0,0,0" VerticalAlignment="Top" Width="140" Height="30" FontSize="16"/>
-    </Grid>
     <Grid Height="40">
       <Button Content="Import Image" Command="{Binding ImportImage}"  HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.ColumnSpan="3"/>
       <Button Content="Saving Folder" Command="{Binding SelectSavingFolder}" HorizontalAlignment="Left" Margin="280,0,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="16" Grid.Column="2"/>
@@ -26,12 +22,13 @@
       <DataGrid Items="{Binding Photos}">
         <DataGrid.Columns>
           <DataGridTextColumn Header="Title" Binding="{Binding FileName}"  />
+          <DataGridTextColumn Header="Status" Binding="{Binding Status}"  />
         </DataGrid.Columns>
       </DataGrid>
     </StackPanel>
     <Grid Height="40" VerticalAlignment="Bottom">
-      <Button Content="Start" HorizontalAlignment="Left" Margin="672,10,0,0" VerticalAlignment="Top" Width="88" Height="30" FontSize="16"/>
-      <ComboBox x:Name="Format" HorizontalAlignment="Left" Margin="514,10,0,0" Width="120" FontSize="16" Background="{x:Null}"/>
+      <Button Content="Start" Command="{Binding Start}" HorizontalAlignment="Left" Margin="672,10,0,0" VerticalAlignment="Top" Width="88" Height="30" FontSize="16"/>
+      <ComboBox x:Name="Format" Items="{Binding SavingFormats}" SelectedItem="{Binding SelectedSavingFormat, Mode=TwoWay}" HorizontalAlignment="Left" Margin="514,10,0,0" Width="120" FontSize="16" Background="{x:Null}"/>
     </Grid>
   </StackPanel>
 

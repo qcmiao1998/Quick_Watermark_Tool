@@ -11,31 +11,35 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using ReactiveUI;
 using Image = SixLabors.ImageSharp.Image;
 
 namespace QuickWatermarkTool.Models
 {
-    public class Photo
+    public class Photo : ReactiveObject
     {
-        public static ObservableCollection<Photo> Photos
-        {
-            get => Program.MwDataContext.Photos;
-        }
+        public static ObservableCollection<Photo> Photos => Program.MwDataContext.Photos;
 
         public static string SavingPath
         {
             get => Program.MwDataContext.SavingPath;
-            set
-            {
-                Program.MwDataContext.SavingPath = value;
-            }
+            set => Program.MwDataContext.SavingPath = value;
         }
+
+        public static Format SavingFormat => (Format)Enum.Parse(typeof(Format),Program.MwDataContext.SelectedSavingFormat);
 
         private Image<Rgba32> originImage;
         private Image<Rgba32> watermarkImage;
         public string ImagePath;
 
         public string FileName { get; }
+        private string status;
+
+        public string Status
+        {
+            get => status;
+            set => this.RaiseAndSetIfChanged(ref status, value);
+        }
 
         public int Width => originImage.Width;
 
@@ -50,19 +54,23 @@ namespace QuickWatermarkTool.Models
         {
             this.ImagePath = path;
             FileName = Path.GetFileName(path);
+            Status = "Loaded";
         }
 
         public void Watermark()
         {
+            Status = "Starting";
+
             originImage = Image.Load(ImagePath);
             watermarkImage = Image.Load(Config.config.WatermarkFilename);
+
+            if (Width > Config.config.MaxOutputImageWidth || Height > Config.config.MaxOutputImageHeight)
+                ResizePic(originImage, Config.config.MaxOutputImageWidth, Config.config.MaxOutputImageHeight);
 
             int wmPosiW, wmPosiH;
             int maxWmWidth = (int)Math.Floor(Config.config.MaxWatermarkScaleWidth * Width);
             int maxWmHeight = (int)Math.Floor(Config.config.MaxWatermarkScaleHeight * Height);
 
-            if (Width > Config.config.MaxOutputImageWidth || Height > Config.config.MaxOutputImageHeight)
-                ResizePic(originImage, Config.config.MaxOutputImageWidth, Config.config.MaxOutputImageHeight);
             ResizePic(watermarkImage, maxWmWidth, maxWmHeight);
 
             int offsetW, offsetH;
@@ -130,11 +138,12 @@ namespace QuickWatermarkTool.Models
             image.Mutate(x => x.Resize(resizeOptions));
         }
 
-        public void SaveImage(string savePath, Format saveFormat)
+        public void SaveImage()
         {
-            string saveName = FileName + "." + saveFormat;
-            string filepath = Path.Combine(savePath, saveName);
-            switch (saveFormat)
+            string fileNameWithoutExt = Path.GetFileNameWithoutExtension(ImagePath);
+            string saveName = fileNameWithoutExt + Config.config.OutputSuffix + "." + Enum.GetName(typeof(Format),SavingFormat);
+            string filepath = Path.Combine(SavingPath, saveName);
+            switch (SavingFormat)
             {
                 case Format.png:
                     originImage.Save(filepath, new PngEncoder());
@@ -149,6 +158,9 @@ namespace QuickWatermarkTool.Models
                     });
                     break;
             }
+            originImage.Dispose();
+            watermarkImage.Dispose();
+            Status = "Success";
         }
 
         public static async void SelectPhotoFiles()
