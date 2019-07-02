@@ -20,7 +20,8 @@ namespace QuickWatermarkTool.Models
         public float MaxWatermarkScaleWidth { get; }
         public float MaxWatermarkScaleHeight { get; }
         public float WatermarkOpacity { get; }
-        public int WatermarkOffset { get; }
+        public int WatermarkOffsetWidth { get; }
+        public int WatermarkOffsetHeight { get; }
         public Photo.Format DefactOutputformat { get; }
         public bool OpenFiledialogOnStartup { get; }
         public string AuthorName { get; }
