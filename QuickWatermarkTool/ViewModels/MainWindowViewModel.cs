@@ -56,6 +56,9 @@ namespace QuickWatermarkTool.ViewModels
                     catch (Exception e)
                     {
                         photo.Status = e.Message;
+#if DEBUG
+                        throw e.InnerException;
+#endif
                     }
                 });
             });

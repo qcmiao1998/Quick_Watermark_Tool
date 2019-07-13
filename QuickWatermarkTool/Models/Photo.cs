@@ -28,6 +28,19 @@ namespace QuickWatermarkTool.Models
             set => Program.MwDataContext.SavingPath = System.Web.HttpUtility.UrlDecode(value);
         }
 
+        public string CurrentPhotoSavingPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(SavingPath))
+                {
+                    return Path.GetDirectoryName(imagePath);
+                }
+
+                return SavingPath;
+            }
+        }
+
         public static Format SavingFormat => (Format)Enum.Parse(typeof(Format),Program.MwDataContext.SelectedSavingFormat.ToLower());
 
         private Image<Rgba32> originImage;
@@ -153,7 +166,7 @@ namespace QuickWatermarkTool.Models
             {
                 string fileNameWithoutExt = Path.GetFileNameWithoutExtension(ImagePath);
                 string saveName = fileNameWithoutExt + Config.config.OutputSuffix + ".gif";
-                string filepath = Path.Combine(SavingPath, saveName);
+                string filepath = Path.Combine(CurrentPhotoSavingPath, saveName);
                 originImage.Save(filepath, new GifEncoder());
             }
             else
@@ -161,7 +174,7 @@ namespace QuickWatermarkTool.Models
                 string fileNameWithoutExt = Path.GetFileNameWithoutExtension(ImagePath);
                 string saveName = fileNameWithoutExt + Config.config.OutputSuffix + "." +
                                   Enum.GetName(typeof(Format), SavingFormat);
-                string filepath = Path.Combine(SavingPath, saveName);
+                string filepath = Path.Combine(CurrentPhotoSavingPath, saveName);
                 switch (SavingFormat)
                 {
                     case Format.png:
@@ -192,7 +205,7 @@ namespace QuickWatermarkTool.Models
                 AllowMultiple = true
             };
             FileDialogFilter imageFilter = new FileDialogFilter();
-            imageFilter.Extensions.AddRange(new[] { "jpg", "png", "gif" });
+            imageFilter.Extensions.AddRange(new[] { "jpg", "jpeg", "png", "gif" });
             imageFilter.Name = "Images";
             dialog.Filters.Add(imageFilter);
             string[] files = await dialog.ShowAsync(Program.MainWindow);
