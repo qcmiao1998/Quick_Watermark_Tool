@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using ReactiveUI;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.Formats.Jpeg;
@@ -6,13 +7,14 @@ using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.MetaData.Profiles.Exif;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.Primitives;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using ReactiveUI;
+using System.Reflection;
 using Image = SixLabors.ImageSharp.Image;
+using Point = SixLabors.Primitives.Point;
+using Size = SixLabors.Primitives.Size;
 
 namespace QuickWatermarkTool.Models
 {
@@ -23,14 +25,20 @@ namespace QuickWatermarkTool.Models
         public static string SavingPath
         {
             get => Program.MwDataContext.SavingPath;
-            set => Program.MwDataContext.SavingPath = value;
+            set => Program.MwDataContext.SavingPath = System.Web.HttpUtility.UrlDecode(value);
         }
 
         public static Format SavingFormat => (Format)Enum.Parse(typeof(Format),Program.MwDataContext.SelectedSavingFormat.ToLower());
 
         private Image<Rgba32> originImage;
         private Image<Rgba32> watermarkImage;
-        public string ImagePath;
+        private string imagePath;
+
+        public string ImagePath
+        {
+            get => imagePath;
+            set => imagePath = System.Web.HttpUtility.UrlDecode(value);
+        }
 
         public string FileName { get; }
         private string status;
@@ -53,7 +61,7 @@ namespace QuickWatermarkTool.Models
         public Photo(string path)
         {
             this.ImagePath = path;
-            FileName = Path.GetFileName(path);
+            FileName = Path.GetFileName(ImagePath);
             Status = "Loaded";
         }
 
@@ -62,7 +70,7 @@ namespace QuickWatermarkTool.Models
             Status = "Starting";
 
             originImage = Image.Load(ImagePath);
-            string wmpath = Path.Combine(Environment.CurrentDirectory, Config.config.WatermarkFilename);
+            string wmpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Config.config.WatermarkFilename);
             watermarkImage = Image.Load(wmpath);
 
             if (Width > Config.config.MaxOutputImageWidth || Height > Config.config.MaxOutputImageHeight)
