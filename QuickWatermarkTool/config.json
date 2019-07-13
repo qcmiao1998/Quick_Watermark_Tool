@@ -8,7 +8,7 @@
   "WatermarkOffsetWidth": 0,
   "WatermarkOffsetHeight": 0,
   "DefaultOutputFormat": "jpg", /* jpg, png, gif */
-  "OpenFileDialogOnStartup": true,
+  "OpenFileDialogOnStartup": false,
   "AuthorName": "",
   "Copyright": "",
   "WatermarkPosition": "center", /* LeftTop, LeftBottom, RightTop, RigthBottom, TopMiddle, BottomMiddle, Center */
