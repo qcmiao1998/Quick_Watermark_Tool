@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <RootAllApplicationAssemblies>false</RootAllApplicationAssemblies>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="**\*.xaml.cs">
@@ -13,10 +14,23 @@
     <AvaloniaResource Include="Assets\*" />
   </ItemGroup>
   <ItemGroup>
+    <RdXmlFile Include="native\netcore.rd.xml" />
+    <RdXmlFile Include="native\app.rd.xml" />
+    <RdXmlFile Include="native\avalonia.rd.xml" />
+    <RdXmlFile Include="native\avalonia.linux.rd.xml" Condition="'$(RuntimeIdentifier)' == 'linux-x64'" />
+    <RdXmlFile Include="native\avalonia.osx.rd.xml" Condition="'$(RuntimeIdentifier)' == 'osx-x64'" />
+    <RdXmlFile Include="native\avalonia.win.rd.xml" Condition="'$(RuntimeIdentifier)' == 'win-x64'" />
+    <RdXmlFile Include="native\avalonia.reactiveui.rd.xml" />
+    <RdXmlFile Include="native\newtonsoft.json.rd.xml" />
+    <RdXmlFile Include="native\rx.rd.xml" />
+    <IlcArg Include="--stacktracedata" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.8.0" />
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.8.0" />
     <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="0.8.0" />
+    <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="1.0.0-alpha-*" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
     <PackageReference Include="NSubsys" Version="1.0.0">
