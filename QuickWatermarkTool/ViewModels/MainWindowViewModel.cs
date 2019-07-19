@@ -44,6 +44,7 @@ namespace QuickWatermarkTool.ViewModels
         {
             Window settingWindow = new SettingWindow();
             settingWindow.DataContext = new SettingWindowViewModel(settingWindow);
+            settingWindow.Icon = Program.MainWindow.Icon;
             settingWindow.Show();
         }
 
