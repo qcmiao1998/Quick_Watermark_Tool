@@ -4,7 +4,6 @@ using Avalonia.Logging.Serilog;
 using QuickWatermarkTool.Models;
 using QuickWatermarkTool.ViewModels;
 using QuickWatermarkTool.Views;
-using System.Threading;
 
 namespace QuickWatermarkTool
 {
@@ -36,11 +35,10 @@ namespace QuickWatermarkTool
             {
                 DataContext = MwDataContext,
             };
-            if (Config.config.OpenFiledialogOnStartup)
+            if (Config.config.OpenFileDialogOnStartup)
             {
-                Photo.SelectPhotoFiles();
-                Thread.SpinWait(100);
-                Photo.SelectSavingFolder();
+                _ = Photo.SelectPhotoFiles();
+                _ = Photo.SelectSavingFolder();
             }
             app.Run(MainWindow);
 

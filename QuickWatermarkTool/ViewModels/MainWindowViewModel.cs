@@ -5,15 +5,17 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Controls;
+using QuickWatermarkTool.Views;
 
 namespace QuickWatermarkTool.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase, IReactiveObject
+    public class MainWindowViewModel : ViewModelBase
     {
         public MainWindowViewModel()
         {
             Photos = new ObservableCollection<Photo>();
-            SelectedSavingFormat = Config.config.DefaultOutputformat.ToString().ToUpper();
+            SelectedSavingFormat = Config.config.DefaultOutputFormat.ToString().ToUpper();
         }
 
         public ObservableCollection<Photo> Photos { get; set; }
@@ -30,12 +32,19 @@ namespace QuickWatermarkTool.ViewModels
 
         public void ImportImage()
         {
-            Photo.SelectPhotoFiles();
+            _ = Photo.SelectPhotoFiles();
         }
 
         public void SelectSavingFolder()
         {
-            Photo.SelectSavingFolder();
+            _ = Photo.SelectSavingFolder();
+        }
+
+        public void LoadSettingWindow()
+        {
+            Window settingWindow = new SettingWindow();
+            settingWindow.DataContext = new SettingWindowViewModel(settingWindow);
+            settingWindow.Show();
         }
 
         public void Start()

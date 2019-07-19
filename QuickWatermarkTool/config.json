@@ -7,10 +7,10 @@
   "WatermarkOpacity": 1.0,
   "WatermarkOffsetWidth": 0,
   "WatermarkOffsetHeight": 0,
-  "DefaultOutputFormat": "jpg", /* jpg, png, gif */
+  "DefaultOutputFormat": "jpg",
   "OpenFileDialogOnStartup": false,
   "AuthorName": "",
   "Copyright": "",
-  "WatermarkPosition": "center", /* LeftTop, LeftBottom, RightTop, RigthBottom, TopMiddle, BottomMiddle, Center */
+  "WatermarkPosition": "center",
   "OutputSuffix": "_watermarked"
 }

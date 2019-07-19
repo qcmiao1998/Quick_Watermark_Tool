@@ -8,9 +8,6 @@
         Icon="/Assets/qwt-icon.ico"
         Title="Quick Watermark Tool" Width="800" Height="400">
 
-    <Design.DataContext>
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -18,11 +15,19 @@
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
     
-    <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="10,10,10,10">
-      <Button Content="Add Image" Command="{Binding ImportImage}" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
-      <Button Content="Saving Folder" Command="{Binding SelectSavingFolder}" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
-      <TextBlock x:Name="expended_name" Text="{Binding SavingPath}" FontSize="16" VerticalAlignment="Center" />
-    </StackPanel>
+    <Grid Grid.Row="0" Margin="10,10,10,10">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="120" />
+        <ColumnDefinition Width="120" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="120" />
+      </Grid.ColumnDefinitions>
+      <Button Content="Add Image" Command="{Binding ImportImage}" FontSize="16" Margin="0,0,10,0" Grid.Column="0" VerticalAlignment="Center"/>
+      <Button Content="Saving Folder" Command="{Binding SelectSavingFolder}" FontSize="16" Margin="0,0,10,0" Grid.Column="1" VerticalAlignment="Center"/>
+      <TextBlock Text="{Binding SavingPath}" FontSize="16" Grid.Column="2"  VerticalAlignment="Center" />
+      <Button Content="Settings" Command="{Binding LoadSettingWindow}" FontSize="16" Margin="0,0,10,0" Grid.Column="3" VerticalAlignment="Center"/>
+    </Grid>
+    
     <DataGrid Items="{Binding Photos}"  Grid.Row="1" FontSize="14" Margin="10,10,10,10" ScrollViewer.VerticalScrollBarVisibility="Auto" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Title" Binding="{Binding FileName}" Width="3*" />

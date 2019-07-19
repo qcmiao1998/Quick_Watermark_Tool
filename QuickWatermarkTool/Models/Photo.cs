@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Image = SixLabors.ImageSharp.Image;
 using Point = SixLabors.Primitives.Point;
 using Size = SixLabors.Primitives.Size;
@@ -197,7 +198,7 @@ namespace QuickWatermarkTool.Models
             Status = "Success";
         }
 
-        public static async void SelectPhotoFiles()
+        public static async Task SelectPhotoFiles()
         {
             OpenFileDialog dialog = new OpenFileDialog
             {
@@ -216,14 +217,15 @@ namespace QuickWatermarkTool.Models
             }
         }
 
-        public static async void SelectSavingFolder()
+        public static async Task SelectSavingFolder()
         {
             OpenFolderDialog ofd = new OpenFolderDialog
             {
                 Title = "Select Saving Folder"
             };
             string folder = await ofd.ShowAsync(Program.MainWindow);
-            SavingPath = folder;
+            if (!string.IsNullOrEmpty(folder))
+                SavingPath = folder;
         }
 
         public enum Format

@@ -1,0 +1,68 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:QuickWatermarkTool.ViewModels;assembly=QuickWatermarkTool"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="QuickWatermarkTool.Views.SettingWindow"
+        Title="Settings" Width="800" Height="400">
+  <Grid Margin="10,10,10,10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="4*" />
+      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="4*" />
+      <ColumnDefinition Width="3*" />
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Text="Max Output Image Width" Grid.Column="0" Grid.Row="0" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding MaxOutputImageWidth}" Grid.Column="1" Grid.Row="0" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Max Output Image Height" Grid.Column="2" Grid.Row="0" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding MaxOutputImageHeight}" Grid.Column="3" Grid.Row="0" FontSize="16" VerticalAlignment="Center"/>
+
+    <Button Content="Watermark File" Command="{Binding ChooseWatermarkFile}"  Grid.Column="0" Grid.Row="1" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding WatermarkFilename}" Grid.Column="1" Grid.Row="1" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Watermark Opacity" Grid.Column="2" Grid.Row="1" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding WatermarkOpacity}" Grid.Column="3" Grid.Row="1" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Max Watermark Scale Width" Grid.Column="0" Grid.Row="2" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding MaxWatermarkScaleWidth}" Grid.Column="1" Grid.Row="2" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Max Watermark Scale Height" Grid.Column="2" Grid.Row="2" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding MaxWatermarkScaleHeight}" Grid.Column="3" Grid.Row="2" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Watermark Offset Width" Grid.Column="0" Grid.Row="3" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding WatermarkOffsetWidth}" Grid.Column="1" Grid.Row="3" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Watermark Offset Height" Grid.Column="2" Grid.Row="3" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding WatermarkOffsetHeight}" Grid.Column="3" Grid.Row="3" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Watermark Position" Grid.Column="0" Grid.Row="4" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <ComboBox Items="{Binding WatermarkPositions}" SelectedItem="{Binding WatermarkPosition}" Grid.Column="1" Grid.Row="4" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Output Filename Suffix" Grid.Column="2" Grid.Row="4" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding OutputSuffix}" Grid.Column="3" Grid.Row="4" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Author Name" Grid.Column="0" Grid.Row="5" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding AuthorName}" Grid.Column="1" Grid.Row="5" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Copyright" Grid.Column="2" Grid.Row="5" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding Copyright}" Grid.Column="3" Grid.Row="5" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Default Output Format" Grid.Column="0" Grid.Row="6" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <ComboBox Items="{Binding SavingFormats}" SelectedItem="{Binding DefaultOutputFormat}" Grid.Column="1" Grid.Row="6" FontSize="16" VerticalAlignment="Center"/>
+
+    <TextBlock Text="Open FileDialog On Startup" Grid.Column="2" Grid.Row="6" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <CheckBox  IsChecked="{Binding OpenFileDialogOnStartup}" Grid.Column="3" Grid.Row="6" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  </Grid>
+</Window>

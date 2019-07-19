@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace QuickWatermarkTool.Models
 {
@@ -7,64 +10,126 @@ namespace QuickWatermarkTool.Models
     {
         public static Config config;
         private IConfiguration iconfig;
+        private JObject jconfig;
         public Config()
         {
             iconfig = new ConfigurationBuilder().AddJsonFile("config.json", optional: false, reloadOnChange: true).Build();
+            TextReader configFileReader = new StreamReader("config.json");
+            jconfig = JObject.Parse(configFileReader.ReadToEnd());
+            jconfig.PropertyChanged += Jconfig_Changed;
         }
 
-        public int MaxOutputImageWidth => GetConfig("MaxOutputImageWidth", 2000);
-        public int MaxOutputImageHeight => GetConfig("MaxOutputImageHeight", 2000);
-        public string WatermarkFilename => GetConfig("WatermarkFilename", "watermark.png");
-        public float MaxWatermarkScaleWidth => GetConfig("MaxWatermarkScaleWidth", (float)0.1);
-        public float MaxWatermarkScaleHeight => GetConfig("MaxWatermarkScaleHeight", (float)0.1);
-        public float WatermarkOpacity => GetConfig("WatermarkOpacity", (float)1.0);
-        public int WatermarkOffsetWidth => GetConfig("WatermarkOffsetWidth", 0);
-        public int WatermarkOffsetHeight => GetConfig("WatermarkOffsetHeight", 0);
-        public Photo.Format DefaultOutputformat { get {
-                string rs = iconfig["DefaultOutputformat"];
-                switch (rs.ToLower())
+        private void Jconfig_Changed(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            using (TextWriter configFileWriter = new StreamWriter("config.json", false))
+            {
+                configFileWriter.WriteLine(jconfig.ToString());
+            }
+        }
+
+        public int MaxOutputImageWidth
+        {
+            get => GetConfig("MaxOutputImageWidth", 2000);
+            set => jconfig["MaxOutputImageWidth"] = value;
+        }
+
+        public int MaxOutputImageHeight
+        {
+            get => GetConfig("MaxOutputImageHeight", 2000);
+            set => jconfig["MaxOutputImageHeight"] = value;
+        }
+
+        public string WatermarkFilename
+        {
+            get => GetConfig("WatermarkFilename", "watermark.png");
+            set => jconfig["WatermarkFilename"] = value;
+        }
+
+        public float MaxWatermarkScaleWidth
+        {
+            get => GetConfig("MaxWatermarkScaleWidth", (float) 0.1);
+            set => jconfig["MaxWatermarkScaleWidth"] = value;
+        }
+
+        public float MaxWatermarkScaleHeight
+        {
+            get => GetConfig("MaxWatermarkScaleHeight", (float) 0.1);
+            set => jconfig["MaxWatermarkScaleHeight"] = value;
+        }
+
+        public float WatermarkOpacity
+        {
+            get => GetConfig("WatermarkOpacity", (float) 1.0);
+            set => jconfig["WatermarkOpacity"] = value;
+        }
+
+        public int WatermarkOffsetWidth
+        {
+            get => GetConfig("WatermarkOffsetWidth", 0);
+            set => jconfig["WatermarkOffsetWidth"] = value;
+        }
+
+        public int WatermarkOffsetHeight
+        {
+            get => GetConfig("WatermarkOffsetHeight", 0);
+            set => jconfig["WatermarkOffsetHeight"] = value;
+        }
+
+        public Photo.Format DefaultOutputFormat {
+            get {
+                string rs = iconfig["DefaultOutputFormat"];
+                try
                 {
-                    case "png":
-                        return Photo.Format.png;
-                    case "gif":
-                        return Photo.Format.gif;
-                    case "jpg":
-                    default:
-                        return Photo.Format.jpg;
+                    return Enum.Parse<Photo.Format>(rs);
                 }
-            } }
-        public bool OpenFiledialogOnStartup => GetConfig("OpenFiledialogOnStartup", true);
-        public string AuthorName => GetConfig("AuthorName", "");
-        public string Copyright => GetConfig("Copyright", "");
+                catch
+                {
+                    return Photo.Format.jpg;
+                }
+            }
+            set => jconfig["DefaultOutputFormat"] = Enum.GetName(typeof(Photo.Format), value);
+        }
+        public bool OpenFileDialogOnStartup
+        {
+            get => GetConfig("OpenFileDialogOnStartup", true);
+            set => jconfig["OpenFileDialogOnStartup"] = value;
+        }
+
+        public string AuthorName
+        {
+            get => GetConfig("AuthorName", "");
+            set => jconfig["AuthorName"] = value;
+        }
+
+        public string Copyright
+        {
+            get => GetConfig("Copyright", "");
+            set => jconfig["Copyright"] = value;
+        }
 
         public Photo.WatermarkPosition WatermarkPosition
         {
             get
             {
                 string rt = iconfig["WatermarkPosition"];
-                switch (rt.ToLower())
+                try
                 {
-                    case "lefttop":
-                        return Photo.WatermarkPosition.LeftTop;
-                    case "leftbottom":
-                        return Photo.WatermarkPosition.LeftBottom;
-                    case "righttop":
-                        return Photo.WatermarkPosition.RightTop;
-                    case "rightbottom":
-                        return Photo.WatermarkPosition.RigthBottom;
-                    case "topmiddle":
-                        return Photo.WatermarkPosition.TopMiddle;
-                    case "bottommiddle":
-                        return Photo.WatermarkPosition.BottomMiddle;
-                    case "center":
-                    default:
-                        return Photo.WatermarkPosition.Center;
-               
+                    return Enum.Parse<Photo.WatermarkPosition>(rt, true);
+                }
+                catch
+                {
+                    return Photo.WatermarkPosition.Center;
                 }
             }
+            set => jconfig["WatermarkPosition"] = Enum.GetName(typeof(Photo.WatermarkPosition), value);
         }
 
-        public string OutputSuffix => GetConfig("OutputSuffix", "_watermarked");
+        public string OutputSuffix
+        {
+            get => GetConfig("OutputSuffix", "_watermarked");
+            set => jconfig["OutputSuffix"] = value;
+        }
+
         public string GetConfig(string key, string defaultvalue)
         {
             try
@@ -72,41 +137,49 @@ namespace QuickWatermarkTool.Models
                 string result = iconfig[key];
                 if (!string.IsNullOrEmpty(result))
                     return result;
+                else
+                    throw new ArgumentNullException();
             }
-            catch { }
-            return defaultvalue;
+            catch
+            {
+                return defaultvalue;
+            }
         }
         public int GetConfig(string key, int defaultvalue)
         {
             try
             {
                 int result = int.Parse(iconfig[key]);
-                if (result != 0)
-                    return result;
+                return result;
             }
-            catch { }
-            return defaultvalue;
+            catch
+            {
+                return defaultvalue;
+            }
         }
         public float GetConfig(string key, float defaultvalue)
         {
             try
             {
                 float result = float.Parse(iconfig[key]);
-                if (result != 0)
-                    return result;
+                return result;
             }
-            catch { }
-            return defaultvalue;
+            catch
+            {
+                return defaultvalue;
+            }
         }
         public bool GetConfig(string key, bool defaultvalue)
         {
             try
             {
-               Boolean result = Boolean.Parse(iconfig[key]);
-               return result;
+                bool result = bool.Parse(iconfig[key]);
+                return result;
             }
-            catch { }
-            return defaultvalue;
+            catch
+            {
+                return defaultvalue;
+            }
         }
 
 
