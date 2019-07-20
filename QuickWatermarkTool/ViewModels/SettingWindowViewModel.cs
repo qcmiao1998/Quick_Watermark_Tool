@@ -18,6 +18,8 @@ namespace QuickWatermarkTool.ViewModels
             config = Config.config;
             this.window = window;
             _watermarkFilename = config.WatermarkFilename;
+            _watermarkPosition = config.WatermarkPosition.ToString();
+            _defaultOutputFormat = config.DefaultOutputFormat.ToString().ToUpper();
         }
         public int MaxOutputImageWidth
         {
@@ -94,10 +96,15 @@ namespace QuickWatermarkTool.ViewModels
         }
 
         public string[] SavingFormats => Enum.GetNames(typeof(Photo.Format)).Select(i => i.ToUpper()).ToArray();
+        private string _defaultOutputFormat;
         public string DefaultOutputFormat
         {
-            get => config.DefaultOutputFormat.ToString().ToUpper();
-            set => config.DefaultOutputFormat = Enum.Parse<Photo.Format>(value,false);
+            get => _defaultOutputFormat;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _defaultOutputFormat, value);
+                config.DefaultOutputFormat = Enum.Parse<Photo.Format>(value, true);
+            }
         }
 
         public bool OpenFileDialogOnStartup
@@ -119,10 +126,15 @@ namespace QuickWatermarkTool.ViewModels
         }
 
         public string[] WatermarkPositions => Enum.GetNames(typeof(Photo.WatermarkPosition)).ToArray();
+        private string _watermarkPosition;
         public string WatermarkPosition
         {
-            get => config.WatermarkPosition.ToString();
-            set => config.WatermarkPosition = Enum.Parse<Photo.WatermarkPosition>(value, false);
+            get => _watermarkPosition;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _watermarkPosition, value);
+                config.WatermarkPosition = Enum.Parse<Photo.WatermarkPosition>(value, true);
+            }
         }
 
         public string OutputSuffix
