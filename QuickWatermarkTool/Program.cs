@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Logging.Serilog;
 using QuickWatermarkTool.Models;
@@ -6,6 +7,8 @@ using QuickWatermarkTool.ViewModels;
 using QuickWatermarkTool.Views;
 using System.IO;
 using System.Reflection;
+using CommandLine;
+using System.Linq;
 
 namespace QuickWatermarkTool
 {
@@ -34,6 +37,26 @@ namespace QuickWatermarkTool
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location));
             Config.config = new Config();
             MwDataContext = new MainWindowViewModel();
+
+            if (args.Length != 0)
+            {
+                Parser.Default.ParseArguments<CliArgs>(args).WithParsed(arg =>
+                {
+                    foreach (var file in arg.PhotoFiles)
+                    {
+                        if (Photo.Photos.Count(i => i.ImagePath == file) == 0)
+                            Photo.Photos.Add(new Photo(file));
+                    }
+
+                    if (!string.IsNullOrEmpty(arg.SavingFolder))
+                    {
+                        Photo.SavingPath = arg.SavingFolder;
+                    }
+                    MwDataContext.Start();
+                });
+                return;
+            }
+
             MainWindow = new MainWindow
             {
                 DataContext = MwDataContext,
@@ -47,6 +70,14 @@ namespace QuickWatermarkTool
 
         }
 
+        class CliArgs
+        {
+            [Value(0,Required = true,HelpText = "Select photo files.")]
+            public IEnumerable<string> PhotoFiles { get; set; }
+
+            [Option('o',"out",Required = false,HelpText = "Saving folder")]
+            public string SavingFolder { get; set; }
+        }
 
     }
 }
