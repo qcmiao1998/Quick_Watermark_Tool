@@ -11,17 +11,19 @@ namespace QuickWatermarkTool.Models
         public static Config config;
         private IConfiguration iconfig;
         private JObject jconfig;
-        public Config()
+        private string configFilename;
+        public Config(string filename = "config.json")
         {
-            iconfig = new ConfigurationBuilder().AddJsonFile("config.json", optional: false, reloadOnChange: true).Build();
-            TextReader configFileReader = new StreamReader("config.json");
+            configFilename = filename;
+            iconfig = new ConfigurationBuilder().AddJsonFile(configFilename, optional: false, reloadOnChange: true).Build();
+            TextReader configFileReader = new StreamReader(configFilename);
             jconfig = JObject.Parse(configFileReader.ReadToEnd());
             jconfig.PropertyChanged += Jconfig_Changed;
         }
 
         private void Jconfig_Changed(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            using (TextWriter configFileWriter = new StreamWriter("config.json", false))
+            using (TextWriter configFileWriter = new StreamWriter(configFilename, false))
             {
                 configFileWriter.WriteLine(jconfig.ToString());
             }
