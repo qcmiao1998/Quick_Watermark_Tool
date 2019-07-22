@@ -35,19 +35,18 @@ namespace QuickWatermarkTool
         private static void AppMain(Application app, string[] args)
         {
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location));
-            
-            MwDataContext = new MainWindowViewModel();
 
             if (args.Length != 0)
             {
                 Parser.Default.ParseArguments<CliArgs>(args).WithParsed(arg =>
                 {
+                    Config.config = !string.IsNullOrEmpty(arg.ConfigFilename) ? new Config(arg.ConfigFilename) : new Config();
+                    MwDataContext = new MainWindowViewModel();
                     foreach (var file in arg.PhotoFiles)
                     {
                         if (Photo.Photos.Count(i => i.ImagePath == file) == 0)
                             Photo.Photos.Add(new Photo(file));
                     }
-                    Config.config = !string.IsNullOrEmpty(arg.ConfigFilename) ? new Config(arg.ConfigFilename) : new Config();
                     if (!string.IsNullOrEmpty(arg.SavingFolder))
                     {
                         Photo.SavingPath = arg.SavingFolder;
@@ -56,7 +55,9 @@ namespace QuickWatermarkTool
                 });
                 return;
             }
+
             Config.config = new Config();
+            MwDataContext = new MainWindowViewModel();
             MainWindow = new MainWindow
             {
                 DataContext = MwDataContext,
