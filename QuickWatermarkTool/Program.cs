@@ -4,6 +4,8 @@ using Avalonia.Logging.Serilog;
 using QuickWatermarkTool.Models;
 using QuickWatermarkTool.ViewModels;
 using QuickWatermarkTool.Views;
+using System.IO;
+using System.Reflection;
 
 namespace QuickWatermarkTool
 {
@@ -29,6 +31,7 @@ namespace QuickWatermarkTool
         // container, etc.
         private static void AppMain(Application app, string[] args)
         {
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location));
             Config.config = new Config();
             MwDataContext = new MainWindowViewModel();
             MainWindow = new MainWindow

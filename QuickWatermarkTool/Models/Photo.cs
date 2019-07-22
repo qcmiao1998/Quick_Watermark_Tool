@@ -84,7 +84,7 @@ namespace QuickWatermarkTool.Models
             Status = "Starting";
 
             originImage = Image.Load(ImagePath);
-            string wmpath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Config.config.WatermarkFilename);
+            string wmpath = Config.config.WatermarkFilename;
             watermarkImage = Image.Load(wmpath);
 
             if (Width > Config.config.MaxOutputImageWidth || Height > Config.config.MaxOutputImageHeight)
