@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Logging.Serilog;
+using CommandLine;
 using QuickWatermarkTool.Models;
 using QuickWatermarkTool.ViewModels;
 using QuickWatermarkTool.Views;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Reflection;
-using CommandLine;
 using System.Linq;
 
 namespace QuickWatermarkTool
@@ -34,8 +35,10 @@ namespace QuickWatermarkTool
         // container, etc.
         private static void AppMain(Application app, string[] args)
         {
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location));
-
+            // TODO Wait net core has an api to get exe path of self-contained exe.
+            //Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location));
+            Directory.SetCurrentDirectory(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule?.FileName));
+            Console.WriteLine(Process.GetCurrentProcess().MainModule?.FileName);
             if (args.Length != 0)
             {
                 Parser.Default.ParseArguments<CliArgs>(args).WithParsed(arg =>
