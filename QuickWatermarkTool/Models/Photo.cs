@@ -115,7 +115,7 @@ namespace QuickWatermarkTool.Models
                     wmPosiW = offsetW;
                     wmPosiH = offsetH;
                     break;
-                case WatermarkPosition.RigthBottom:
+                case WatermarkPosition.RightBottom:
                     wmPosiW = Width - WmWidth - offsetW;
                     wmPosiH = Height - WmHeight - offsetH;
                     break;
@@ -245,7 +245,7 @@ namespace QuickWatermarkTool.Models
             LeftTop,
             LeftBottom,
             RightTop,
-            RigthBottom,
+            RightBottom,
             TopMiddle,
             BottomMiddle,
             Center
