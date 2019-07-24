@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Logging.Serilog;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Reflection;
 using CommandLine;
 using System.Linq;
+using Serilog;
 
 namespace QuickWatermarkTool
 {
@@ -34,6 +36,11 @@ namespace QuickWatermarkTool
         // container, etc.
         private static void AppMain(Application app, string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+            Console.WriteLine("Do not close this window!");
+ 
             Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location));
 
             if (args.Length != 0)

@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 using QuickWatermarkTool.Views;
+using Serilog;
 
 namespace QuickWatermarkTool.ViewModels
 {
@@ -66,11 +67,13 @@ namespace QuickWatermarkTool.ViewModels
                     catch (Exception e)
                     {
                         photo.Status = e.Message;
+                        Log.Error(e, $"{photo.ImagePath} error.");
 #if DEBUG
                         throw e.InnerException;
 #endif
                     }
                 });
+                Log.Information("All finished.");
             });
             processThread.Start();
         }

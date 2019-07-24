@@ -11,8 +11,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
+using Serilog;
 using Image = SixLabors.ImageSharp.Image;
 using Point = SixLabors.Primitives.Point;
 using Size = SixLabors.Primitives.Size;
@@ -26,7 +26,11 @@ namespace QuickWatermarkTool.Models
         public static string SavingPath
         {
             get => Program.MwDataContext.SavingPath;
-            set => Program.MwDataContext.SavingPath = System.Web.HttpUtility.UrlDecode(value);
+            set
+            {
+                Program.MwDataContext.SavingPath = System.Web.HttpUtility.UrlDecode(value); 
+                Log.Information($"Save to {value}.");
+            }
         }
 
         public string CurrentPhotoSavingPath
@@ -77,12 +81,13 @@ namespace QuickWatermarkTool.Models
             this.ImagePath = path;
             FileName = Path.GetFileName(ImagePath);
             Status = "Loaded";
+            Log.Information($"{path} loaded.");
         }
 
         public void Watermark()
         {
             Status = "Starting";
-
+            Log.Information($"{this.ImagePath} started.");
             originImage = Image.Load(ImagePath);
             string wmpath = Config.config.WatermarkFilename;
             watermarkImage = Image.Load(wmpath);
@@ -196,6 +201,7 @@ namespace QuickWatermarkTool.Models
             originImage.Dispose();
             watermarkImage.Dispose();
             Status = "Success";
+            Log.Information($"{this.ImagePath} success.");
         }
 
         public static async Task SelectPhotoFiles()
