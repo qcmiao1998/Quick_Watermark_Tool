@@ -26,10 +26,6 @@
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-    <PackageReference Include="NSubsys" Version="1.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0006" />
   </ItemGroup>
   <ItemGroup>
