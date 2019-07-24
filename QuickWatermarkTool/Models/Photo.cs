@@ -28,7 +28,7 @@ namespace QuickWatermarkTool.Models
             get => Program.MwDataContext.SavingPath;
             set
             {
-                Program.MwDataContext.SavingPath = System.Web.HttpUtility.UrlDecode(value); 
+                Program.MwDataContext.SavingPath = value; 
                 Log.Information($"Save to {value}.");
             }
         }
@@ -39,7 +39,7 @@ namespace QuickWatermarkTool.Models
             {
                 if (string.IsNullOrEmpty(SavingPath))
                 {
-                    return Path.GetDirectoryName(imagePath);
+                    return Path.GetDirectoryName(ImagePath);
                 }
 
                 return SavingPath;
@@ -50,13 +50,8 @@ namespace QuickWatermarkTool.Models
 
         private Image<Rgba32> originImage;
         private Image<Rgba32> watermarkImage;
-        private string imagePath;
 
-        public string ImagePath
-        {
-            get => imagePath;
-            set => imagePath = System.Web.HttpUtility.UrlDecode(value);
-        }
+        public string ImagePath { get; set; }
 
         public string FileName { get; }
         private string status;
@@ -218,8 +213,9 @@ namespace QuickWatermarkTool.Models
             string[] files = await dialog.ShowAsync(Program.MainWindow);
             foreach (var file in files)
             {
-                if(Photos.Count(i => i.ImagePath == file) == 0)
-                    Photos.Add(new Photo(file));
+                string filedDecode = System.Web.HttpUtility.UrlDecode(file);
+                if (Photos.Count(i => i.ImagePath == filedDecode) == 0)
+                    Photos.Add(new Photo(filedDecode));
             }
         }
 
@@ -231,7 +227,7 @@ namespace QuickWatermarkTool.Models
             };
             string folder = await ofd.ShowAsync(Program.MainWindow);
             if (!string.IsNullOrEmpty(folder))
-                SavingPath = folder;
+                SavingPath = System.Web.HttpUtility.UrlDecode(folder);
         }
 
         public enum Format
