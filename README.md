@@ -2,6 +2,9 @@
 
 Quick Watermark Tool is a .Net Core based image watermarking tool which supports Windows, Linux and Mac OSX.
 
+![Main Window](mainwindow.png)
+![Setting Window](settings.png)
+
 ## Function
 
 This tool provides an easy way to get photos watermarked. It has great advantages in personal blogs, Wechat Official Accounts, etc.
